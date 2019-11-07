@@ -6,5 +6,5 @@ import com.hollysys.iods.data.api.entity.SysUser;
 
 public interface SysUserProvider extends IService<SysUser> {
 
-    SysUser getSysUserByUserName(String userName);
+    SysUser getSysUserByUserId(String userId);
 }

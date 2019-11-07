@@ -39,6 +39,12 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>${mssql.version}</version>
         </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsernameUserDetailService extends BaseUserDetailService {
     @Override
-    protected SysUser getUser(String userName) {
-        SysUser sysUser = sysUserProvider.getSysUserByUserName(userName);
+    protected SysUser getUser(String userId) {
+        SysUser sysUser = sysUserProvider.getSysUserByUserId(userId);
         if(sysUser == null){
-            log.error("找不到该用户，用户名：" + userName);
-            throw new UsernameNotFoundException("找不到该用户，用户名：" + userName);
+            throw new UsernameNotFoundException("找不到该用户，用户名：" + userId);
         }
         return sysUser;
     }

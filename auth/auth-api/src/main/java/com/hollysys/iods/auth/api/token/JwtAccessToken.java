@@ -1,5 +1,6 @@
 package com.hollysys.iods.auth.api.token;
 
+import com.hollysys.iods.common.core.utils.JsonUtils;
 import com.hollysys.iods.data.api.entity.SysUser;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -19,8 +20,10 @@ public class JwtAccessToken extends JwtAccessTokenConverter {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken defaultOAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);
-
         // 设置额外用户信息
+        SysUser sysUser = ((BaseUserDetail) authentication.getPrincipal()).getSysUser();
+        sysUser.setPassword(null);
+        defaultOAuth2AccessToken.getAdditionalInformation().put(Constant.USER_INFO, sysUser);
         return super.enhance(defaultOAuth2AccessToken, authentication);
     }
 
@@ -38,10 +41,12 @@ public class JwtAccessToken extends JwtAccessTokenConverter {
     }
 
     private void convertData(OAuth2AccessToken accessToken, Map<String, ?> map) {
-
+        accessToken.getAdditionalInformation().put(Constant.USER_INFO,convertUserData(map.get(Constant.USER_INFO)));
     }
 
     private SysUser convertUserData(Object map) {
-        return null;
+        String json = JsonUtils.deserializer(map);
+        SysUser user = JsonUtils.serializable(json, SysUser.class);
+        return user;
     }
 }

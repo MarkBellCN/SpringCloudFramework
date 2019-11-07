@@ -12,9 +12,9 @@ public class SysUserController {
     @Reference
     private SysUserProvider sysUserProvider;
 
-    @GetMapping("/user/{userName}")
-    public SysUser getSysUserByUserName(@PathVariable("userName") String userName){
-        return sysUserProvider.getSysUserByUserName(userName);
+    @GetMapping("/user/{userId}")
+    public SysUser getSysUserByUserName(@PathVariable("userId") String userId){
+        return sysUserProvider.getSysUserByUserId(userId);
     }
 
 }

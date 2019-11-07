@@ -21,12 +21,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mssql.version>7.4.0.jre8</mssql.version>
+        <mysql.version>5.1.38</mysql.version>
         <httpcomponents.version>4.5.4</httpcomponents.version>
         <alibaba.cloud.version>2.1.0.RELEASE</alibaba.cloud.version>
         <mybatis.plus.version>3.2.0</mybatis.plus.version>
         <druid.version>1.1.21</druid.version>
         <pagehelper.version>1.2.12</pagehelper.version>
         <dozer.version>5.5.1</dozer.version>
+        <oauth2.version>2.1.0.RELEASE</oauth2.version>
+        <jwt.version>1.0.11.RELEASE</jwt.version>
     </properties>
 
     <dependencyManagement>

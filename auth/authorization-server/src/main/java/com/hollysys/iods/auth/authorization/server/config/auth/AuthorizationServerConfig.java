@@ -79,25 +79,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .checkTokenAccess("isAuthenticated()");
     }
 
-    /**
-     * 使用非对称加密算法来对Token进行签名
-     * @return
-     */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-
         final JwtAccessTokenConverter converter = new JwtAccessToken();
-        // 导入证书
-        KeyStoreKeyFactory keyStoreKeyFactory =
-                new KeyStoreKeyFactory(new ClassPathResource("keystore.jks"), "foobar".toCharArray());
-        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("test"));
-
+        converter.setSigningKey("iods_secret");
         return converter;
     }
 
 
     /**
-     * 跨域, 开发环境使用 vue-cli 代理，正式用nginx
+     * 跨域
      */
     @Bean
     public FilterRegistrationBean corsFilter() {
