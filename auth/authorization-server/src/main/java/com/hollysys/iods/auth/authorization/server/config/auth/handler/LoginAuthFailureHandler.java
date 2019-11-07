@@ -21,7 +21,7 @@ public class LoginAuthFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=UTF-8");
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), Result.fail(e.getMessage()));
     }

@@ -1,8 +1,12 @@
 package com.hollysys.iods.auth.authorization.server.config.auth;
 
 
+import com.hollysys.iods.auth.authorization.server.config.auth.filter.PhoneLoginAuthenticationFilter;
 import com.hollysys.iods.auth.authorization.server.config.auth.handler.AuthenticationEntryPointHandler;
 import com.hollysys.iods.auth.authorization.server.config.auth.handler.LoginAuthFailureHandler;
+import com.hollysys.iods.auth.authorization.server.config.auth.handler.LoginAuthSuccessHandler;
+import com.hollysys.iods.auth.authorization.server.config.auth.provider.PhoneAuthenticationProvider;
+import com.hollysys.iods.auth.authorization.server.service.PhoneUserDetailService;
 import com.hollysys.iods.auth.authorization.server.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +18,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,10 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UsernameUserDetailService usernameUserDetailService;
 
     @Autowired
+    private PhoneUserDetailService phoneUserDetailService;
+
+    @Autowired
     private AuthenticationEntryPointHandler unauthorizedHandler;
 
     @Autowired
     private LoginAuthFailureHandler loginAuthFailureHandler;
+
+    @Autowired
+    private LoginAuthSuccessHandler loginAuthSuccessHandler;
 
     @Override
     @Bean
@@ -37,10 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .addFilterBefore(getPhoneLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // 配置登陆页/login并允许访问
                 .formLogin().loginPage("/login").permitAll()
+                .successHandler(loginAuthSuccessHandler)
                 .failureHandler(loginAuthFailureHandler)
                 // 登出页
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/backReferer")
@@ -50,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(phoneAuthenticationProvider());
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
@@ -68,6 +83,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 使用BCrypt进行密码的hash
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
+    }
+
+    @Bean
+    public PhoneAuthenticationProvider phoneAuthenticationProvider(){
+        PhoneAuthenticationProvider provider = new PhoneAuthenticationProvider();
+        // 设置userDetailsService
+        provider.setUserDetailsService(phoneUserDetailService);
+        // 禁止隐藏用户未找到异常
+        provider.setHideUserNotFoundExceptions(false);
+        return provider;
+    }
+
+    @Bean
+    public PhoneLoginAuthenticationFilter getPhoneLoginAuthenticationFilter() {
+        PhoneLoginAuthenticationFilter filter = new PhoneLoginAuthenticationFilter();
+        try {
+            filter.setAuthenticationManager(this.authenticationManagerBean());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        filter.setAuthenticationSuccessHandler(loginAuthSuccessHandler);
+        filter.setAuthenticationFailureHandler(loginAuthFailureHandler);
+        return filter;
     }
 
 }

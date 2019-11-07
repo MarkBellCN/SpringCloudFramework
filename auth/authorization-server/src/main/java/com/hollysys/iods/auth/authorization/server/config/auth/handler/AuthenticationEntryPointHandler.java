@@ -17,9 +17,9 @@ import java.io.Serializable;
 @Component
 public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint, Serializable {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         response.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), Result.fail(AuthErrorType.INVALID_GRANT));
+        mapper.writeValue(response.getOutputStream(), Result.fail(e.getMessage()));
     }
 }

@@ -1,32 +1,46 @@
 package com.hollysys.iods.auth.authorization.server.config.auth.filter;
 
+import com.hollysys.iods.auth.authorization.server.config.auth.token.PhoneAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private static final String SPRING_SECURITY_RESTFUL_USERNAME_KEY = "username";
-    private static final String SPRING_SECURITY_RESTFUL_PASSWORD_KEY = "password";
+public class PhoneLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+    private static final String SPRING_SECURITY_RESTFUL_PHONE_KEY = "phone";
+    private static final String SPRING_SECURITY_RESTFUL_VERIFY_CODE_KEY = "verifyCode";
+
+    private static final String SPRING_SECURITY_RESTFUL_LOGIN_URL = "/phoneLogin";
     private boolean postOnly = true;
+
+    public PhoneLoginAuthenticationFilter() {
+        super(new AntPathRequestMatcher(SPRING_SECURITY_RESTFUL_LOGIN_URL, "POST"));
+    }
+
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException(
                     "Authentication method not supported: " + request.getMethod());
         }
+
         AbstractAuthenticationToken authRequest;
         String principal;
         String credentials;
-        principal = obtainParameter(request, SPRING_SECURITY_RESTFUL_USERNAME_KEY);
-        credentials = obtainParameter(request, SPRING_SECURITY_RESTFUL_PASSWORD_KEY);
+
+        // 手机验证码登陆
+        principal = obtainParameter(request, SPRING_SECURITY_RESTFUL_PHONE_KEY);
+        credentials = obtainParameter(request, SPRING_SECURITY_RESTFUL_VERIFY_CODE_KEY);
+
         principal = principal.trim();
-        authRequest = new UsernamePasswordAuthenticationToken(principal, credentials);
+        authRequest = new PhoneAuthenticationToken(principal, credentials);
+
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
         return this.getAuthenticationManager().authenticate(authRequest);

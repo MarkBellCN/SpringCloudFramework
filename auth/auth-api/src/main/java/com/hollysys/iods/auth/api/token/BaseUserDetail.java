@@ -11,7 +11,7 @@ import java.util.Collection;
 public class BaseUserDetail implements UserDetails, CredentialsContainer {
 
     private final SysUser sysUser;
-    private final org.springframework.security.core.userdetails.User user;
+    private final User user;
 
     public BaseUserDetail(SysUser sysUser, User user) {
         this.sysUser = sysUser;

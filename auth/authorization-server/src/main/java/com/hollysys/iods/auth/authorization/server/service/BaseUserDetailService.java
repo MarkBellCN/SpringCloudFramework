@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -53,7 +54,7 @@ public abstract class BaseUserDetailService implements UserDetailsService {
         });
 
         // 返回带有用户权限信息的User
-        org.springframework.security.core.userdetails.User user =  new org.springframework.security.core.userdetails.User(sysUser.getUserName(),
+        User user =  new org.springframework.security.core.userdetails.User(sysUser.getUserName(),
                 sysUser.getPassword(), isActive(sysUser.getActive()), true, true, true, authorities);
         return new BaseUserDetail(sysUser, user);
     }
@@ -61,7 +62,7 @@ public abstract class BaseUserDetailService implements UserDetailsService {
     protected abstract SysUser getUser(String userId) ;
 
     private boolean isActive(Integer active){
-        return true;
+        return active == null || active == 1;
     }
 
     private List<GrantedAuthority> convertToAuthorities(SysUser sysUser, List<SysRole> roles) {
