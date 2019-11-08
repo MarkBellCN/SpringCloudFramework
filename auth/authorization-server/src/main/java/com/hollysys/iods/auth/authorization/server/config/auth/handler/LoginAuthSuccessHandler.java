@@ -5,15 +5,12 @@ import com.hollysys.iods.common.core.vo.Result;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -28,17 +25,14 @@ public class LoginAuthSuccessHandler extends SavedRequestAwareAuthenticationSucc
     private ClientDetailsService clientDetailsService;
 
     @Autowired
-    @Qualifier("jwtTokenServices")
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String type = request.getHeader("Accept");
         if(!type.contains("text/html")){
-
             String clientId = "app";
             String clientSecret = "app";
-
             ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
             if (null == clientDetails) {
                 throw new UnapprovedClientAuthenticationException("clientId不存在" + clientId);
