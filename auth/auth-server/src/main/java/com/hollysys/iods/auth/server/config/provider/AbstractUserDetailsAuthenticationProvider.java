@@ -1,4 +1,4 @@
-package com.hollysys.iods.auth.server.config.auth.provider;
+package com.hollysys.iods.auth.server.config.provider;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

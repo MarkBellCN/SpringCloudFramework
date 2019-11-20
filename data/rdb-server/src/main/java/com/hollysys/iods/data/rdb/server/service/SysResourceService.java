@@ -7,11 +7,12 @@ import com.hollysys.iods.data.rdb.server.mapper.SysResourceMapper;
 import org.apache.dubbo.config.annotation.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service(protocol = "dubbo")
 public class SysResourceService extends ServiceImpl<SysResourceMapper, SysResources> implements SysResourcesProvider {
     @Override
-    public List<SysResources> getResourcesByUserId(String userId) {
+    public Set<SysResources> getResourcesByUserId(String userId) {
         return this.baseMapper.getResourcesByUserId(userId);
     }
 }

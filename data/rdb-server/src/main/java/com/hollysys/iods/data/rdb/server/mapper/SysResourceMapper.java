@@ -6,8 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface SysResourceMapper  extends BaseMapper<SysResources> {
-    List<SysResources> getResourcesByUserId(@Param("userId") String userId);
+    Set<SysResources> getResourcesByUserId(@Param("userId") String userId);
 }

@@ -11,12 +11,13 @@ import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Set;
 
 @Service(protocol = "dubbo")
 public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleProvider {
 
     @Override
-    public List<SysRole> getRoleByUserId(String userId) {
+    public Set<SysRole> getRoleByUserId(String userId) {
         return this.baseMapper.getRoleByUserId(userId);
     }
 }

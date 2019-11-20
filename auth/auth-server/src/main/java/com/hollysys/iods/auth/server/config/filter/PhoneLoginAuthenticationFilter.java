@@ -1,6 +1,6 @@
-package com.hollysys.iods.auth.server.config.auth.filter;
+package com.hollysys.iods.auth.server.config.filter;
 
-import com.hollysys.iods.auth.server.config.auth.token.PhoneAuthenticationToken;
+import com.hollysys.iods.auth.server.config.token.PhoneAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;

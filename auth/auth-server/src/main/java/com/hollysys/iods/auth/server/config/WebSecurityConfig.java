@@ -1,11 +1,11 @@
-package com.hollysys.iods.auth.server.config.auth;
+package com.hollysys.iods.auth.server.config;
 
 
-import com.hollysys.iods.auth.server.config.auth.filter.PhoneLoginAuthenticationFilter;
-import com.hollysys.iods.auth.server.config.auth.handler.AuthenticationEntryPointHandler;
-import com.hollysys.iods.auth.server.config.auth.handler.LoginAuthFailureHandler;
-import com.hollysys.iods.auth.server.config.auth.handler.LoginAuthSuccessHandler;
-import com.hollysys.iods.auth.server.config.auth.provider.PhoneAuthenticationProvider;
+import com.hollysys.iods.auth.server.config.filter.PhoneLoginAuthenticationFilter;
+import com.hollysys.iods.auth.server.config.handler.AuthenticationEntryPointHandler;
+import com.hollysys.iods.auth.server.config.handler.LoginAuthFailureHandler;
+import com.hollysys.iods.auth.server.config.handler.LoginAuthSuccessHandler;
+import com.hollysys.iods.auth.server.config.provider.PhoneAuthenticationProvider;
 import com.hollysys.iods.auth.server.service.PhoneUserDetailService;
 import com.hollysys.iods.auth.server.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;

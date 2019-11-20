@@ -1,4 +1,4 @@
-package com.hollysys.iods.auth.server.config.auth.token;
+package com.hollysys.iods.auth.server.config.token;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,8 +1,7 @@
-package com.hollysys.iods.auth.server.config.auth.handler;
+package com.hollysys.iods.auth.server.config.handler;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hollysys.iods.auth.api.exception.AuthErrorType;
 import com.hollysys.iods.common.core.vo.Result;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

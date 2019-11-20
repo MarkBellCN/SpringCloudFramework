@@ -1,31 +1,26 @@
-package com.hollysys.iods.auth.server.config.auth;
+package com.hollysys.iods.auth.server.config;
 
 
-import com.hollysys.iods.auth.api.token.JwtAccessToken;
+import com.hollysys.iods.auth.server.oauth2.CustomTokenEnhancer;
 import com.hollysys.iods.auth.server.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.Ordered;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -44,15 +39,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Resource
     private DataSource dataSource;
 
-    @Autowired
-    private RedisConnectionFactory connectionFactory;
-
-
-    @Bean("redisTokenStore")
-    public RedisTokenStore getRedisTokenStore() {
-        return new RedisTokenStore(connectionFactory);
-    }
-
 
     @Bean("jdbcClientDetailsService")
     public JdbcClientDetailsService getJdbcClientDetailsService() {
@@ -62,6 +48,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
+
+    @Bean
+    public ApprovalStore approvalStore() {
+        return new JdbcApprovalStore(dataSource);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer
+                // 开启/oauth/token_key验证端口无权限访问
+                .tokenKeyAccess("permitAll()")
+                // 开启/oauth/check_token验证端口认证权限访问
+                .checkTokenAccess("isAuthenticated()");
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -78,21 +78,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // refresh_token需要userDetailsService
                 .reuseRefreshTokens(false).userDetailsService(userDetailsService)
                 .tokenEnhancer(tokenEnhancerChain())
-                .tokenStore(getRedisTokenStore());
+                .approvalStore(approvalStore());
     }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer
-                // 开启/oauth/token_key验证端口无权限访问
-                .tokenKeyAccess("permitAll()")
-                // 开启/oauth/check_token验证端口认证权限访问
-                .checkTokenAccess("isAuthenticated()");
-    }
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        final JwtAccessTokenConverter converter = new JwtAccessToken();
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(signingKey);
         return converter;
     }
@@ -102,37 +94,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
-    @Primary
-    @Bean("jwtTokenServices")
-    public DefaultTokenServices tokenServices() {
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(jwtTokenStore());
-        return defaultTokenServices;
+    @Bean
+    protected AuthorizationCodeServices authorizationCodeServices() {
+        // 授权码存储等处理方式类，使用jdbc，操作oauth_code表
+        return new JdbcAuthorizationCodeServices(dataSource);
     }
 
     @Bean
     public TokenEnhancerChain tokenEnhancerChain() {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter()));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(new CustomTokenEnhancer(), jwtAccessTokenConverter()));
         return tokenEnhancerChain;
-    }
-
-
-    /**
-     * 跨域
-     */
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean =  new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
     }
 
 }

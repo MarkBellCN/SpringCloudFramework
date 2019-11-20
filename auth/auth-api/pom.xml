@@ -8,19 +8,8 @@
         <version>3.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>auth-api</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <version>${oauth2.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

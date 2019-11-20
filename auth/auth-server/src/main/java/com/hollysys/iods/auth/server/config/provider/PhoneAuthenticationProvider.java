@@ -1,7 +1,7 @@
-package com.hollysys.iods.auth.server.config.auth.provider;
+package com.hollysys.iods.auth.server.config.provider;
 
 
-import com.hollysys.iods.auth.server.config.auth.token.PhoneAuthenticationToken;
+import com.hollysys.iods.auth.server.config.token.PhoneAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
