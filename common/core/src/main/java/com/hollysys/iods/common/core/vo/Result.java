@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Getter
 public class Result<T> {
     public static final String SUCCESSFUL_CODE = "0";
-    public static final String SUCCESSFUL_MSG = "请求成功";
+    public static final String SUCCESSFUL_MSG = "success";
 
     private String code;
 

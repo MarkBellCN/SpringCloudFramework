@@ -12,8 +12,9 @@
     <modules>
         <module>auth</module>
         <module>data</module>
-        <module>mc-service</module>
+        <module>app-server</module>
         <module>common</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
