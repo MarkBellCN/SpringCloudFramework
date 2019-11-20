@@ -3,13 +3,13 @@ package com.hollysys.iods.auth.api.service.impl;
 import com.hollysys.iods.auth.api.provider.AuthProvider;
 import com.hollysys.iods.auth.api.service.AuthService;
 import com.hollysys.iods.common.core.vo.Result;
-import com.sun.tools.javac.code.Types;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.jwt.crypto.sign.InvalidSignatureException;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
             Jwt jwt = getJwt(authentication);
             jwt.verifySignature(verifier);
             invalid = Boolean.FALSE;
-        } catch (Types.SignatureGenerator.InvalidSignatureException | IllegalArgumentException ex) {
+        } catch (InvalidSignatureException | IllegalArgumentException ex) {
             log.warn("user token has expired or signature error ");
         }
         return invalid;

@@ -21,8 +21,10 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring.version>5.1.10.RELEASE</spring.version>
         <mssql.version>7.4.0.jre8</mssql.version>
         <mysql.version>5.1.38</mysql.version>
+        <jetcache.version>2.5.14</jetcache.version>
         <httpcomponents.version>4.5.4</httpcomponents.version>
         <alibaba.cloud.version>2.1.0.RELEASE</alibaba.cloud.version>
         <mybatis.plus.version>3.2.0</mybatis.plus.version>
@@ -70,12 +72,7 @@
             <optional>true</optional>
             <version>1.18.2</version>
         </dependency>
-
         <!--Spring Boot-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -142,5 +139,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

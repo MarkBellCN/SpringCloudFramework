@@ -1,21 +1,17 @@
-package com.hollysys.iods.common.core.exception;
+package com.hollysys.iods.common.web.exception;
 
+import com.hollysys.iods.common.core.exception.BaseException;
+import com.hollysys.iods.common.core.exception.SystemErrorType;
 import com.hollysys.iods.common.core.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
 
 @Slf4j
 public class DefaultGlobalExceptionHandlerAdvice {
-    @ExceptionHandler(value = {MissingServletRequestParameterException.class})
-    public Result missingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        log.error("missing servlet request parameter exception:{}", ex.getMessage());
-        return Result.fail(SystemErrorType.ARGUMENT_NOT_VALID);
-    }
 
     @ExceptionHandler(value = {MultipartException.class})
     public Result uploadFileLimitException(MultipartException ex) {

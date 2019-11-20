@@ -32,7 +32,6 @@ public abstract class BaseUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
         SysUser sysUser = getUser(userId);
-
         // 返回带有用户权限信息的User
         User user =  new org.springframework.security.core.userdetails.User(
                 sysUser.getUserName(),

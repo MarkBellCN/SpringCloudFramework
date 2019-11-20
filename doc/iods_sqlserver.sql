@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     2019/11/7 10:36:08                           */
+/* Created on:     2019/11/20 12:46:11                          */
 /*==============================================================*/
 
 
@@ -20,16 +20,23 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('sys_user_role') and o.name = 'FK_SYS_USER_REFERENCE_SYS_USER')
+alter table sys_user_role
+   drop constraint FK_SYS_USER_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('sys_user_role') and o.name = 'FK_SYS_USER_REFERENCE_SYS_ROLE')
 alter table sys_user_role
    drop constraint FK_SYS_USER_REFERENCE_SYS_ROLE
 go
 
 if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('sys_user_role') and o.name = 'FK_SYS_USER_REFERENCE_SYS_USER')
-alter table sys_user_role
-   drop constraint FK_SYS_USER_REFERENCE_SYS_USER
+            from  sysobjects
+           where  id = object_id('oauth_client_details')
+            and   type = 'U')
+   drop table oauth_client_details
 go
 
 if exists (select 1
@@ -65,6 +72,28 @@ if exists (select 1
            where  id = object_id('sys_user_role')
             and   type = 'U')
    drop table sys_user_role
+go
+
+/*==============================================================*/
+/* Table: oauth_client_details                                  */
+/*==============================================================*/
+create table oauth_client_details (
+   client_id            varchar(255)         not null,
+   resource_ids         varchar(255)         null,
+   client_secret        varchar(255)         null,
+   scope                varchar(255)         null,
+   authorized_grant_types varchar(255)         null,
+   web_server_redirect_uri varchar(255)         null,
+   authorities          varchar(255)         null,
+   access_token_validity varchar(255)         null,
+   refresh_token_validity varchar(255)         null,
+   additional_information varchar(255)         null,
+   create_time          varchar(255)         null,
+   archived             varchar(255)         null,
+   trusted              varchar(255)         null,
+   autoapprove          varchar(255)         null,
+   constraint PK_OAUTH_CLIENT_DETAILS primary key (client_id)
+)
 go
 
 /*==============================================================*/
@@ -471,7 +500,7 @@ go
 /* Table: sys_user                                              */
 /*==============================================================*/
 create table sys_user (
-   user_id              varchar(11)          not null,
+   user_id              varchar(11)          null,
    user_name            varchar(50)          null,
    phone                varchar(11)          null,
    gender               varchar(1)           null,
@@ -482,7 +511,7 @@ create table sys_user (
    createby             varchar(50)          null,
    updatetime           datetime             null,
    updateby             varchar(50)          null,
-   constraint PK_SYS_USER primary key nonclustered (user_id)
+   constraint PK_SYS_USER primary key nonclustered ()
 )
 go
 
@@ -585,7 +614,6 @@ go
 create table sys_user_role (
    id                   int                  identity,
    role_id              int                  null,
-   user_id              varchar(11)          null,
    constraint PK_SYS_USER_ROLE primary key nonclustered (id)
 )
 go
@@ -618,12 +646,12 @@ alter table sys_role_resource
 go
 
 alter table sys_user_role
-   add constraint FK_SYS_USER_REFERENCE_SYS_ROLE foreign key (role_id)
-      references sys_role (id)
+   add constraint FK_SYS_USER_REFERENCE_SYS_USER foreign key ()
+      references sys_user
 go
 
 alter table sys_user_role
-   add constraint FK_SYS_USER_REFERENCE_SYS_USER foreign key (user_id)
-      references sys_user (user_id)
+   add constraint FK_SYS_USER_REFERENCE_SYS_ROLE foreign key (role_id)
+      references sys_role (id)
 go
 

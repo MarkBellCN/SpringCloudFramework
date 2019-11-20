@@ -1,6 +1,7 @@
 package com.hollysys.iods.auth.server.config;
 
 
+import com.hollysys.iods.auth.server.exception.CustomWebResponseExceptionTranslator;
 import com.hollysys.iods.auth.server.oauth2.CustomTokenEnhancer;
 import com.hollysys.iods.auth.server.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -73,12 +75,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(authenticationManager)
-                // 配置JwtAccessToken转换器
-                .accessTokenConverter(jwtAccessTokenConverter())
-                // refresh_token需要userDetailsService
-                .reuseRefreshTokens(false).userDetailsService(userDetailsService)
+                .authorizationCodeServices(authorizationCodeServices())
+                .approvalStore(approvalStore())
+                .exceptionTranslator(customExceptionTranslator())
                 .tokenEnhancer(tokenEnhancerChain())
-                .approvalStore(approvalStore());
+                .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
     }
 
 
@@ -87,6 +89,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(signingKey);
         return converter;
+    }
+
+    @Bean
+    public WebResponseExceptionTranslator customExceptionTranslator() {
+        return new CustomWebResponseExceptionTranslator();
     }
 
     @Bean
