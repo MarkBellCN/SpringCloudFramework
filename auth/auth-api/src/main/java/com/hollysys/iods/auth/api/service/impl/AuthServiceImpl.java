@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.InvalidSignatureException;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
+@RefreshScope
 @Slf4j
 public class AuthServiceImpl implements AuthService {
     @Autowired
@@ -30,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     /**
      * jwt token 密钥，主要用于token解析，签名验证
      */
+
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
 

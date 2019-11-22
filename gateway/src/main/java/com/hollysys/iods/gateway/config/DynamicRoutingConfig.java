@@ -39,7 +39,8 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
     @Bean
     public void refreshRouting() throws NacosException {
         ConfigService configService = NacosFactory.createConfigService(serverAddr);
-        configService.getConfig(DATA_ID, GROUP, 5000);
+        String configInfo = configService.getConfig(DATA_ID, GROUP, 5000);
+        loadRoutingByString(configInfo);
         configService.addListener(DATA_ID, GROUP, new Listener() {
             @Override
             public Executor getExecutor() {
@@ -48,19 +49,22 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
 
             @Override
             public void receiveConfigInfo(String configInfo) {
-                log.info(configInfo);
-                clearRoute();
-                try {
-                    List<RouteDefinition> gatewayRouteDefinitions = JSONObject.parseArray(configInfo, RouteDefinition.class);
-                    for (RouteDefinition routeDefinition : gatewayRouteDefinitions) {
-                        addRoute(routeDefinition);
-                    }
-                    publish();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                loadRoutingByString(configInfo);
             }
         });
+    }
+    private void loadRoutingByString(String configInfo){
+        log.info("加载路由信息\n {}",configInfo);
+        clearRoute();
+        try {
+            List<RouteDefinition> gatewayRouteDefinitions = JSONObject.parseArray(configInfo, RouteDefinition.class);
+            for (RouteDefinition routeDefinition : gatewayRouteDefinitions) {
+                addRoute(routeDefinition);
+            }
+            publish();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 
     private void clearRoute() {
@@ -75,7 +79,7 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
             routeDefinitionWriter.save(Mono.just(definition)).subscribe();
             ROUTE_LIST.add(definition.getId());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
