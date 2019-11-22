@@ -18,25 +18,20 @@ public class Result<T> {
 
     private String msg;
 
-    private Instant time;
-
     private T data;
 
     public Result() {
-        this.time = ZonedDateTime.now().toInstant();
     }
 
     public Result(ErrorType errorType) {
         this.code = errorType.getCode();
         this.msg = errorType.getMsg();
-        this.time = ZonedDateTime.now().toInstant();
     }
 
     private Result(String code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-        this.time = ZonedDateTime.now().toInstant();
     }
 
     public Result(ErrorType errorType, T data) {

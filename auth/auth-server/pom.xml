@@ -15,6 +15,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hollysys.iods</groupId>
+            <artifactId>common-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--oauth2认证-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

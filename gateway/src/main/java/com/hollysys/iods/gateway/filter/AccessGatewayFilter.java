@@ -19,8 +19,6 @@ import reactor.core.publisher.Mono;
 @ComponentScan(basePackages = "com.hollysys.iods.auth.api")
 @Slf4j
 public class AccessGatewayFilter implements GlobalFilter {
-    private final static String X_CLIENT_TOKEN_USER = "x-client-token-user";
-    private final static String X_CLIENT_TOKEN = "x-client-token";
     private static final String BEARER = "Bearer";
 
     @Autowired
@@ -42,7 +40,7 @@ public class AccessGatewayFilter implements GlobalFilter {
             return chain.filter(exchange);
         }
         // 如果请求未携带token信息, 直接跳出
-        if (StringUtils.isBlank(authentication) || !authentication.startsWith(BEARER)) {
+        if (StringUtils.isBlank(authentication)) {
             log.debug("url:{},method:{},headers:{}, 请求未携带token信息", url, method, request.getHeaders());
             return unauthorized(exchange);
         }
@@ -50,7 +48,7 @@ public class AccessGatewayFilter implements GlobalFilter {
         if (authService.hasPermission(authentication, url, method)) {
             ServerHttpRequest.Builder builder = request.mutate();
             //将jwt token中的用户信息传给服务
-            builder.header(X_CLIENT_TOKEN_USER, authService.getJwt(authentication).getClaims());
+            builder.header(AuthService.X_CLIENT_TOKEN_USER, authService.getJwt(authentication).getClaims());
             return chain.filter(exchange.mutate().request(builder.build()).build());
         }
         return unauthorized(exchange);

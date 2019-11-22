@@ -25,14 +25,8 @@ public class AuthServiceImpl implements AuthService {
     private AuthProvider authProvider;
 
     /**
-     * Authorization认证开头是"bearer "
-     */
-    private static final int BEARER_BEGIN_INDEX = 7;
-
-    /**
      * jwt token 密钥，主要用于token解析，签名验证
      */
-
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
 
@@ -91,6 +85,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Jwt getJwt(String authentication) {
-        return JwtHelper.decode(StringUtils.substring(authentication, BEARER_BEGIN_INDEX));
+        return JwtHelper.decode(authentication);
     }
 }

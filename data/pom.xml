@@ -16,11 +16,7 @@
     </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>com.hollysys.iods</groupId>
-            <artifactId>common-web</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
     </dependencies>
 
 </project>

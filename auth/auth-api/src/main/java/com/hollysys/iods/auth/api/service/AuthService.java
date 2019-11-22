@@ -5,6 +5,9 @@ import org.springframework.security.jwt.Jwt;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 
 public interface AuthService {
+    public static final String X_CLIENT_TOKEN_USER = "x-client-token-user";
+
+    public static final String X_CLIENT_TOKEN = "x-client-token";
     /**
      * 调用签权服务，判断用户是否有权限
      */

@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(loginAuthSuccessHandler)
                 .failureHandler(loginAuthFailureHandler)
                 // 其余所有请求全部需要鉴权认证
-                .and().authorizeRequests().anyRequest().authenticated();
+                .and().authorizeRequests().anyRequest().permitAll();
     }
 
     @Override
