@@ -59,8 +59,6 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
     }
