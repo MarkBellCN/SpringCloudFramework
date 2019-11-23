@@ -2,21 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>iods</artifactId>
-        <groupId>com.hollysys.iods</groupId>
+        <artifactId>platform</artifactId>
+        <groupId>com.hollysys.platform</groupId>
         <version>3.1.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>gateway</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.hollysys.iods</groupId>
+            <groupId>com.hollysys.platform</groupId>
             <artifactId>common-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -28,7 +27,7 @@
         </dependency>
         <!--网关签权客户端-->
         <dependency>
-            <groupId>com.hollysys.iods</groupId>
+            <groupId>com.hollysys.platform</groupId>
             <artifactId>auth-api</artifactId>
             <version>${project.version}</version>
         </dependency>
