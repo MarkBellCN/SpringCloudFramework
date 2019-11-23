@@ -25,21 +25,16 @@ public class AuthenticationService {
         log.debug("正在访问的url是:{}，method:{}", authRequest.getServletPath(), authRequest.getMethod());
         //获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //获取此url，method访问对应的权限资源信息
-        ConfigAttribute urlConfigAttribute = resourceService.findConfigAttributesByUrl(authRequest);
-        if (NONEXISTENT_URL.equals(urlConfigAttribute.getAttribute()))
-            log.debug("url未在资源池中找到，拒绝访问");
-        //获取此访问用户所有角色拥有的权限资源
         Set<SysResources> userResources = findResourcesByUsername(authentication.getName());
         //用户拥有权限资源 与 url要求的资源进行对比
-        return isMatch(urlConfigAttribute, userResources);
+        return true;
     }
 
     /**
      * url对应资源与用户拥有资源进行匹配
      */
-    public boolean isMatch(ConfigAttribute urlConfigAttribute, Set<SysResources> userResources) {
-        return userResources.stream().anyMatch(resource -> resource.getId().equals(urlConfigAttribute.getAttribute()));
+    public boolean isMatch(Set<SysResources> userResources,String url) {
+        return userResources.stream().anyMatch(resource -> resource.getId().equals(url));
     }
 
     /**

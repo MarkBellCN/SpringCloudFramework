@@ -72,7 +72,6 @@ public class AuthServiceImpl implements AuthService {
         verifier = Optional.ofNullable(verifier).orElse(new MacSigner(signingKey));
         //是否无效true表示无效
         boolean invalid = Boolean.TRUE;
-
         try {
             Jwt jwt = getJwt(authentication);
             jwt.verifySignature(verifier);

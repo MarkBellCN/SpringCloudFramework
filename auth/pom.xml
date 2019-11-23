@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
-            <version>RELEASE</version>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
