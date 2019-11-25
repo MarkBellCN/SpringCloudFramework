@@ -6,8 +6,10 @@ import com.hollysys.platform.common.core.exception.ErrorType;
 import com.hollysys.platform.common.core.exception.SystemErrorType;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class Result<T> {
+public class Result<T> implements Serializable {
     public static final String SUCCESSFUL_CODE = "0";
     public static final String SUCCESSFUL_MSG = "success";
 

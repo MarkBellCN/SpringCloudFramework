@@ -33,6 +33,7 @@
         <dozer.version>5.5.1</dozer.version>
         <oauth2.version>2.1.0.RELEASE</oauth2.version>
         <jwt.version>1.0.11.RELEASE</jwt.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencyManagement>

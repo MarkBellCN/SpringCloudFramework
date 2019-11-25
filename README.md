@@ -1,20 +1,48 @@
-### 项目结构  
 ```
-├─iods
-│  │ 
-│  ├─auth-----------------OAuth2服务授权中心
-│  │  ├─auth-api----------------授权中心公共模块
-│  │  ├─authentication-server----------------认证模块
-│  │  └─authorization-server----------------授权服务
-│  │ 
-│  ├─common----------------通用脚手架
-│  │ 
-│  │   
-│  ├─data--------------数据访问服务
-│  │  ├─rdb-api----------------基础数据公共模块
-│  │  └─rdb-server----------------基础数据模块服务端
-│  │  
-│  ├─mc-service--------------业务系统
-│  │  └─web-api----------------iods业务API接口
-│  │
+├─app-server
+│  └─sm-server
+├─auth
+│  ├─auth-api
+│  │  ├─src
+│  │  │  └─main
+│  │  │      └─java
+│  │  │          └─com
+│  │  │              └─hollysys
+│  │  │                  └─platform
+│  │  │                      └─auth
+│  │  │                          └─api
+│  │  │                              ├─provider
+│  │  │                              └─service
+│  │  │                                  └─impl
+│  └─auth-server
+├─common
+│  ├─core
+│  │  ├─src
+│  │  │  └─main
+│  │  │      └─java
+│  │  │          └─com
+│  │  │              └─hollysys
+│  │  │                  └─platform
+│  │  │                      └─common
+│  │  │                          └─core
+│  │  │                              ├─exception
+│  │  │                              ├─utils
+│  │  │                              └─vo
+│  └─web
+│      ├─src
+│      │  ├─main
+│      │  │  ├─java
+│      │  │  │  └─com
+│      │  │  │      └─hollysys
+│      │  │  │          └─platform
+│      │  │  │              └─common
+│      │  │  │                  └─web
+│      │  │  │                      ├─exception
+│      │  │  │                      ├─interceptor
+│      │  │  │                      └─utils
+├─data
+│  ├─rdb-api
+│  └─rdb-server
+├─doc
+├─gateway
 ```

@@ -11,12 +11,12 @@ import java.util.Date;
 @Data
 public class BaseEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Date createtime;
 
-    private String createBy;
+    private String createby;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updateTime;
+    private Date updatetime;
 
-    private String updateBy;
+    private String updateby;
 }

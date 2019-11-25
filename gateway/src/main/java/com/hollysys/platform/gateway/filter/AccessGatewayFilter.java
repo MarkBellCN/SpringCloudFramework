@@ -16,7 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 @Configuration
-@ComponentScan(basePackages = "com.hollysys.iods.auth.api")
+@ComponentScan(basePackages = "com.hollysys.platform.auth.api")
 @Slf4j
 public class AccessGatewayFilter implements GlobalFilter {
     private static final String BEARER = "Bearer";

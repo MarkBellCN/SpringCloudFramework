@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.hollysys.iods.auth.api")
+@EnableFeignClients(basePackages = "com.hollysys.platform.auth.api")
 @EnableCircuitBreaker
 public class GatewayApplication {
     public static void main(String[] args) {
