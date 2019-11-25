@@ -15,6 +15,11 @@
             <artifactId>auth-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.hollysys.platform</groupId>
+            <artifactId>common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--spring web相关包-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -25,11 +30,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hollysys.platform</groupId>
-            <artifactId>common-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <!--mybatis-plus-->
         <dependency>
