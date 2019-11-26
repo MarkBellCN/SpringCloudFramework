@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Getter
 public class Result<T> implements Serializable {
-    public static final String SUCCESSFUL_CODE = "0";
+    public static final String SUCCESSFUL_CODE = "1";
     public static final String SUCCESSFUL_MSG = "success";
 
     private String code;

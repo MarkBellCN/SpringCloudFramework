@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public enum SmServerErrorType implements ErrorType {
-    INVALID_REQUEST("050001");
+    SAVE_DATA_ERROR("00030001","save.data.error");
 
     /**
      * 错误类型码
@@ -16,8 +16,8 @@ public enum SmServerErrorType implements ErrorType {
      */
     private String msg;
 
-    SmServerErrorType(String code) {
+    SmServerErrorType(String code,String msg) {
         this.code = code;
-        this.msg = localeMessage.getMessage(code);
+        this.msg = localeMessage.getMessage(msg);
     }
 }

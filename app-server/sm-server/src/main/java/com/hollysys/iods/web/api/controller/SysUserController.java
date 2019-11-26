@@ -45,13 +45,13 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "添加用户信息")
     @PostMapping()
     public Result save(){
-        return Result.fail(SystemErrorType.SYSTEM_BUSY);
+        return Result.fail(SmServerErrorType.SAVE_DATA_ERROR);
     }
 
     @ApiOperation(value = "修改用户信息")
     @PutMapping()
     public Result update(){
-        return Result.fail(SmServerErrorType.INVALID_REQUEST);
+        return Result.fail(SystemErrorType.SYSTEM_BUSY);
     }
 
 }
