@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hollysys.platform.common.core.config.InitService,\
 com.hollysys.platform.common.core.utils.SpringContextUtil,\
 com.hollysys.platform.common.core.utils.BeanGeneratorWrapper,\
 com.hollysys.platform.common.core.utils.LocaleMessage
