@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+ com.hollysys.platform.common.web.config.SwaggerConfig

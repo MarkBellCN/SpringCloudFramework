@@ -1,4 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.hollysys.platform.common.core.config.SwaggerConfig,\
 com.hollysys.platform.common.core.utils.SpringContextUtil,\
 com.hollysys.platform.common.core.utils.LocaleMessage
