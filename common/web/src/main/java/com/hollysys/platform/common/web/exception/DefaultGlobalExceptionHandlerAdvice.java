@@ -5,10 +5,13 @@ import com.hollysys.platform.common.core.exception.SystemErrorType;
 import com.hollysys.platform.common.core.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
+
+import java.util.List;
 
 @Slf4j
 public class DefaultGlobalExceptionHandlerAdvice {
@@ -20,14 +23,15 @@ public class DefaultGlobalExceptionHandlerAdvice {
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public Result serviceException(MethodArgumentNotValidException ex) {
-        log.error("service exception:{}", ex.getMessage());
-        return Result.fail(SystemErrorType.ARGUMENT_NOT_VALID, ex.getBindingResult().getFieldError().getDefaultMessage());
+    public Result argumentNotValidException(MethodArgumentNotValidException ex) {
+        List<ObjectError> errors =ex.getBindingResult().getAllErrors();
+        StringBuffer errorMsg=new StringBuffer();
+        errors.stream().forEach(x -> errorMsg.append(x.getDefaultMessage()).append(";"));
+        return Result.fail(SystemErrorType.ARGUMENT_NOT_VALID, errorMsg);
     }
 
     @ExceptionHandler(value = {BaseException.class})
     public Result baseException(BaseException ex) {
-        log.error("base exception:{}", ex.getMessage());
         return Result.fail(ex.getErrorType());
     }
 
