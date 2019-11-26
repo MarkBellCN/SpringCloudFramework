@@ -13,7 +13,7 @@ public class AuthenticationController {
     @Autowired
     AuthenticationService authenticationService;
 
-    @PostMapping(value = "/auth/permission")
+    @PostMapping(value = "/permission")
     public Result decide(@RequestParam String url, @RequestParam String method, HttpServletRequest request) {
         boolean decide = authenticationService.decide(new HttpServletRequestAuthWrapper(request, url, method));
         return Result.success(decide);
