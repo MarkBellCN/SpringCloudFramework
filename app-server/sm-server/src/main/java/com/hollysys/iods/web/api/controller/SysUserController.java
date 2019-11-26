@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/user")
 public class SysUserController extends BaseController {
-    @Reference
+    @Reference(check = false)
     private SysUserProvider sysUserProvider;
 
     @ApiOperation(value = "分页查询用户信息")

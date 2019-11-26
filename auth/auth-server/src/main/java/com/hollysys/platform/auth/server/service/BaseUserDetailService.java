@@ -21,11 +21,11 @@ import java.util.Set;
 @Slf4j
 public abstract class BaseUserDetailService implements UserDetailsService {
 
-    @Reference
+    @Reference(check = false)
     protected SysUserProvider sysUserProvider;
-    @Reference
+    @Reference(check = false)
     private SysRoleProvider sysRoleProvider;
-    @Reference
+    @Reference(check = false)
     private SysResourcesProvider sysResourcesProvider;
 
     @Override
