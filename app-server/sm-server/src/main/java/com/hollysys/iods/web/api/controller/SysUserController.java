@@ -3,6 +3,7 @@ package com.hollysys.iods.web.api.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hollysys.iods.data.api.provider.SysUserProvider;
 import com.hollysys.iods.web.api.dto.SysUserQueryDTO;
+import com.hollysys.iods.web.api.exception.SmServerErrorType;
 import com.hollysys.platform.common.core.exception.SystemErrorType;
 import com.hollysys.platform.common.core.vo.Result;
 import com.hollysys.platform.common.web.controller.BaseController;
@@ -50,7 +51,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "修改用户信息")
     @PutMapping()
     public Result update(){
-        return Result.fail();
+        return Result.fail(SmServerErrorType.INVALID_REQUEST);
     }
 
 }
