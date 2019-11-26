@@ -1,4 +1,4 @@
-package com.hollysys.platform.common.web.utils;
+package com.hollysys.platform.common.core.utils;
 
 import com.google.common.collect.Maps;
 
