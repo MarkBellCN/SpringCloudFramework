@@ -1,6 +1,9 @@
 package com.hollysys.platform.common.web.config;
 
 import com.google.common.net.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,6 +24,8 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    @Value("${swagger2.enable}")
+    private boolean enable = false;
 
     @Bean
     public Docket createRestApi() {
@@ -31,7 +36,8 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts());
+                .securityContexts(securityContexts())
+                .enable(enable);
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("IODS RESTful APIs")
