@@ -1,8 +1,13 @@
 package com.hollysys.platform.common.web.config;
 
 import com.google.common.net.HttpHeaders;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,31 +23,34 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableSwagger2
+@EnableConfigurationProperties(SwaggerProperties.class)
 public class SwaggerConfig {
-    @Value("${swagger2.enable}")
-    private boolean enable = false;
+    @Resource
+    private SwaggerProperties swaggerProperties;
 
-    @Bean
+    @Bean("createRestApi")
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.hollysys"))
+                .apis(RequestHandlerSelectors.basePackage(""))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .enable(enable);
+                .enable(swaggerProperties.isEnable());
+        return docket;
     }
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("IODS RESTful APIs")
-                .description("智能远程监控系统API")
-                .version("3.1.0")
+        return new ApiInfoBuilder()
+                .title(swaggerProperties.getTitle())
+                .description(swaggerProperties.getDescription())
+                .version(swaggerProperties.getVersion())
                 .build();
     }
 
@@ -66,5 +74,4 @@ public class SwaggerConfig {
         securityReferences.add(new SecurityReference(HttpHeaders.AUTHORIZATION, authorizationScopes));
         return securityReferences;
     }
-
 }
