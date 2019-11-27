@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@EnableSwagger2
 @EnableConfigurationProperties(SwaggerProperties.class)
 public class SwaggerConfig {
     @Resource
