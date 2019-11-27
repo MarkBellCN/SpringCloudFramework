@@ -13,7 +13,7 @@
 
     SystemErrorType         ：   系统错误状态码
     AuthErrorType           ：   授权错误状态码
-    SmServerErrorType       ：   系统设计错误错误状态码  
+    SmServerErrorType       ：   系统设置错误错误状态码  
 
 业务类型定义为：
 
@@ -49,3 +49,14 @@
 ├─doc                               |   数据库设计、SQL脚本等文档
 ├─gateway                           |   网关服务
 ```
+# 项目依赖关系
+| 类库 | 内部依赖 | 说明 |
+| --- | --- | ---- |
+| common-core | 无 | 系统核心包，定义系统异常、错误码 |
+| rdb-api | common-core | 关系数据库服务暴露接口 |
+| auth-api | common-core | 授权服务暴露接口，判断权限、Token |
+| common-web | common-core、auth-api | WEB相关的类库，定义基本控制器、拦截器、通用全局异常处理、查询参数 |
+| rdb-server | common-web、rdb-api | 关系库服务 |
+| auth-server | common-web、rdb-api | 授权服务 |
+| sm-server | common-web、rdb-api | 系统设置服务 |
+| gateway | common-core、auth-api | 网关服务 |
