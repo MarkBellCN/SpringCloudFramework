@@ -1,3 +1,18 @@
+HOLLiAS iODS智能生产远程监控系统
+====================================================
+项目全称为：HOLLiAS iODS智能生产远程监控系统
+
+# 概述
+新的智能工厂软件一体化平台，系统满足一体化认证、一体化操作、一体化运维的要求。
+
+# 系统架构
+![avatar](./doc/技术架构.png)
+
+# 技术选型
+ * Springboot 2.1.9.RELEASE
+ * SpringCloud Greenwich.RELEASE
+ * SpringCloud-Alibaba 2.1.0.RELEASE
+ 
 # 异常状态码规则
 异常类型主要分两种：系统内部异常和 API 接口（业务请求）异常，
 对应的异常类为： `ApiException` 和 `InternalException`
