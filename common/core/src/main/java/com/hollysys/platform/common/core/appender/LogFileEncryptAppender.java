@@ -7,7 +7,7 @@ import ch.qos.logback.core.status.ErrorStatus;
 
 import java.io.IOException;
 
-public class LogFileEncryptionAppender extends RollingFileAppender<ILoggingEvent> {
+public class LogFileEncryptAppender extends RollingFileAppender<ILoggingEvent> {
 
     @Override
     protected void subAppend(ILoggingEvent event){
