@@ -23,7 +23,7 @@
             </Pattern>
         </layout>
     </appender>
-    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="ERROR_FILE" class="com.hollysys.platform.common.core.appender.LogFileEncryptionAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
