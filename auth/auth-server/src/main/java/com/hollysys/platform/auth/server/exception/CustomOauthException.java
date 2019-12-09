@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @JsonSerialize(using = CustomOauthExceptionSerializer.class)
-class CustomOauthException extends OAuth2Exception {
+public class CustomOauthException extends OAuth2Exception {
 
     private final Result result;
 

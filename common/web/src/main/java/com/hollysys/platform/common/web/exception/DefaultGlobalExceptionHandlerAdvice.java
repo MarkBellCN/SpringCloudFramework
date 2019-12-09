@@ -37,7 +37,7 @@ public class DefaultGlobalExceptionHandlerAdvice {
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result exception() {
+    public Result exception(Exception e) {
         return Result.fail();
     }
 
