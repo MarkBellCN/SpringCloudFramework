@@ -28,6 +28,7 @@
         <jetcache.version>2.5.14</jetcache.version>
         <httpcomponents.version>4.5.4</httpcomponents.version>
         <alibaba.cloud.version>2.1.0.RELEASE</alibaba.cloud.version>
+        <libthrift.version>0.13.0</libthrift.version>
         <mybatis.plus.version>3.2.0</mybatis.plus.version>
         <druid.version>1.1.21</druid.version>
         <pagehelper.version>1.2.12</pagehelper.version>

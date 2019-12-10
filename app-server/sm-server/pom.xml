@@ -13,10 +13,9 @@
     <dependencies>
         <dependency>
             <groupId>com.hollysys.platform</groupId>
-            <artifactId>rpc-proxy-api</artifactId>
+            <artifactId>rdb-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

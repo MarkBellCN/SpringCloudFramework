@@ -1,15 +1,13 @@
 package com.hollysys.iods.web.api.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hollysys.iods.data.api.provider.SysUserProvider;
 import com.hollysys.iods.web.api.dto.SysUserQueryDTO;
 import com.hollysys.iods.web.api.exception.SmServerErrorType;
 import com.hollysys.platform.common.core.exception.SystemErrorType;
 import com.hollysys.platform.common.core.vo.Result;
 import com.hollysys.platform.common.web.controller.BaseController;
 import com.hollysys.platform.common.web.params.PageQueryParams;
-import com.hollysys.platform.rpc.proxy.api.provider.RpcProxyProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,16 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/user")
 public class SysUserController extends BaseController {
-    private static String SYS_USER_PROVIDER = "com.hollysys.iods.data.api.provider.SysUserProvider";
-
     @Reference(check = false)
-    private RpcProxyProvider rpcProxyProvider;
+    private SysUserProvider sysUserProvider;
 
     @ApiOperation(value = "分页查询用户信息")
     @PostMapping("/pageQuery")
-    public Result pageQuery(@RequestBody @Validated PageQueryParams<SysUserQueryDTO> params) throws ClassNotFoundException {
-        String pageResult = rpcProxyProvider.invoke(SYS_USER_PROVIDER,"page", params.getPage());
-        return Result.success(getResultByPage(JSONObject.parseObject(pageResult, Page.class)));
+    public Result pageQuery(@RequestBody @Validated PageQueryParams<SysUserQueryDTO> params){
+        IPage pageResult = sysUserProvider.page(params.getPage());
+        return Result.success(getResultByPage(pageResult));
     }
 
     @ApiImplicitParams({
@@ -42,8 +38,8 @@ public class SysUserController extends BaseController {
     })
     @ApiOperation(value = "根据用户ID查询用户信息")
     @GetMapping("/{userId}")
-    public Result getSysUserByUserId(@PathVariable("userId") String userId) throws ClassNotFoundException {
-        return Result.success(rpcProxyProvider.invoke(SYS_USER_PROVIDER,"getSysUserByUserId", userId));
+    public Result getSysUserByUserId(@PathVariable("userId") String userId){
+        return Result.success(sysUserProvider.getSysUserByUserId(userId));
     }
 
     @ApiOperation(value = "添加用户信息")
