@@ -2,6 +2,7 @@ package com.hollysys.iods.web.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hollysys.iods.web.api.dto.SysUserQueryDTO;
 import com.hollysys.iods.web.api.exception.SmServerErrorType;
 import com.hollysys.platform.common.core.exception.SystemErrorType;
@@ -33,7 +34,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/pageQuery")
     public Result pageQuery(@RequestBody @Validated PageQueryParams<SysUserQueryDTO> params) throws ClassNotFoundException {
         String pageResult = rpcProxyProvider.invoke(SYS_USER_PROVIDER,"page", params.getPage());
-        return Result.success(getResultByPage(JSONObject.parseObject(pageResult,IPage.class)));
+        return Result.success(getResultByPage(JSONObject.parseObject(pageResult, Page.class)));
     }
 
     @ApiImplicitParams({
@@ -42,7 +43,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "根据用户ID查询用户信息")
     @GetMapping("/{userId}")
     public Result getSysUserByUserId(@PathVariable("userId") String userId) throws ClassNotFoundException {
-        return Result.success(rpcProxyProvider.invoke(SYS_USER_PROVIDER,"page", userId));
+        return Result.success(rpcProxyProvider.invoke(SYS_USER_PROVIDER,"getSysUserByUserId", userId));
     }
 
     @ApiOperation(value = "添加用户信息")
