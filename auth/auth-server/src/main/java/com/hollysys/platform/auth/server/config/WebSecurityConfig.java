@@ -50,15 +50,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .addFilterBefore(getPhoneLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                // 配置登陆页/login并允许访问
-                .formLogin().permitAll()
-                .successHandler(loginAuthSuccessHandler)
-                .failureHandler(loginAuthFailureHandler)
-                // 其余所有请求全部需要鉴权认证
-                .and().authorizeRequests().anyRequest().permitAll();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/actuator/**", "/oauth/token").permitAll()
+                .and().authorizeRequests().antMatchers().authenticated();
     }
 
     @Override
