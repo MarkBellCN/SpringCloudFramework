@@ -1,7 +1,5 @@
 package com.hollysys.platform.common.core.utils;
 
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Set;
 /**
  * 各层bean之间的深度转换，vo/domain , dto , po
  */
-@Component
 public interface BeanGenerator {
 
     /**
@@ -42,4 +39,5 @@ public interface BeanGenerator {
      * 数组深度复制
      */
     <T extends Serializable, S extends Serializable> T[] convert(S[] s, Class<T> clz);
+
 }

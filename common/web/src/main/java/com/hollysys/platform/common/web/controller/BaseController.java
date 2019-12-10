@@ -1,6 +1,7 @@
 package com.hollysys.platform.common.web.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hollysys.platform.common.core.utils.BeanGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Validator;
@@ -9,7 +10,10 @@ import java.util.Map;
 
 public class BaseController {
     @Autowired
-    private Validator globalValidator;
+    protected Validator globalValidator;
+
+    @Autowired
+    protected BeanGenerator beanGenerator;
 
     protected Map getResultByPage(IPage pageResult){
         Map result = new HashMap();

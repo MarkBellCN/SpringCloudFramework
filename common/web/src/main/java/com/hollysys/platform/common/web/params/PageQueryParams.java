@@ -1,5 +1,6 @@
 package com.hollysys.platform.common.web.params;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -23,7 +24,7 @@ public class PageQueryParams<T> {
     private List<SortItem> sortMap;
 
     @JsonIgnore
-    public Page getPage() {
+    public IPage getPage() {
         return new Page(this.getPageNum(), this.getPageSize(),true);
     }
 }
