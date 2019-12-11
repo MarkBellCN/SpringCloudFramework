@@ -71,25 +71,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
 
-    @Bean
-    public ApprovalStore approvalStore() {
-        return new JdbcApprovalStore(dataSource);
-    }
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
-    }
-
-    @Bean
-    public UserApprovalHandler userApprovalHandler() {
-        ApprovalStoreUserApprovalHandler userApprovalHandler = new ApprovalStoreUserApprovalHandler();
-        userApprovalHandler.setApprovalStore(approvalStore());
-        userApprovalHandler.setClientDetailsService(clientDetailsService);
-        userApprovalHandler.setRequestFactory(oAuth2RequestFactory());
-        return userApprovalHandler;
-    }
-
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
@@ -114,12 +95,30 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .tokenStore(tokenStore())
                 .tokenGranter(tokenGranter())
                 .exceptionTranslator(customExceptionTranslator())
-                .reuseRefreshTokens(true)
+                .reuseRefreshTokens(false)
                 .authenticationManager(authenticationManager)
                 .userApprovalHandler(userApprovalHandler())
                 .userDetailsService(userDetailsService);
     }
 
+    @Bean
+    public ApprovalStore approvalStore() {
+        return new JdbcApprovalStore(dataSource);
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
+    }
+
+    @Bean
+    public UserApprovalHandler userApprovalHandler() {
+        ApprovalStoreUserApprovalHandler userApprovalHandler = new ApprovalStoreUserApprovalHandler();
+        userApprovalHandler.setApprovalStore(approvalStore());
+        userApprovalHandler.setClientDetailsService(clientDetailsService);
+        userApprovalHandler.setRequestFactory(oAuth2RequestFactory());
+        return userApprovalHandler;
+    }
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
@@ -171,7 +170,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private TokenGranter tokenGranter() {
         return new TokenGranter() {
             private CompositeTokenGranter delegate;
-
             @Override
             public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
                 if (delegate == null) {

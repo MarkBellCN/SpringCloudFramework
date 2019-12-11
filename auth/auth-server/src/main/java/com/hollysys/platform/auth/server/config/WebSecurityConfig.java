@@ -50,13 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .addFilterBefore(getPhoneLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .httpBasic()
-                .and()
                 .authorizeRequests()
-                .antMatchers("/actuator/**", "/oauth/token").permitAll()
-                .and().authorizeRequests().antMatchers().authenticated();
+                .antMatchers("/actuator/**", "/oauth/token", "/oauth/authorize").permitAll()
+                .and()
+                .authorizeRequests().anyRequest().authenticated();
     }
 
     @Override
