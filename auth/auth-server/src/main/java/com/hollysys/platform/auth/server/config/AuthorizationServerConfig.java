@@ -36,6 +36,7 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -109,7 +110,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
+        //数据库存储 需要 oauth_refresh_token oauth_access_token表
+        //TokenStore tokenStore = new JdbcTokenStore(dataSource);
+
+        //不使用数据库存储信息
+        TokenStore tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
+        return tokenStore;
     }
 
     @Bean
@@ -171,6 +177,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private TokenGranter tokenGranter() {
         return new TokenGranter() {
             private CompositeTokenGranter delegate;
+
             @Override
             public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
                 if (delegate == null) {

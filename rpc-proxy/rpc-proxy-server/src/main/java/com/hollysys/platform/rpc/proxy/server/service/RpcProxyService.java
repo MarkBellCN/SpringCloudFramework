@@ -9,10 +9,20 @@ import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.rpc.service.GenericService;
 import org.apache.thrift.TException;
 
+
 @Service(protocol = "dubbo")
 public class RpcProxyService implements RpcProxyProvider.Iface {
+    @Override
+    public String invoke(String interfaceClass, String methodName, String params) throws TException {
+        try {
+            return exec(interfaceClass,methodName,params);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    private String invoke(String interfaceClass, String methodName, Object... params) throws ClassNotFoundException {
+    private String exec(String interfaceClass, String methodName, Object... params) throws ClassNotFoundException {
         ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
         reference.setInterface(interfaceClass); // 接口名
         reference.setGeneric(true); // 声明为泛化接口
@@ -25,10 +35,5 @@ public class RpcProxyService implements RpcProxyProvider.Iface {
         // 用com.alibaba.dubbo.rpc.service.GenericService可以替代所有接口引用
         String[] invokeParamTypes = ReflectUtils.getParamTypesByMethod(interfaceClass,methodName,params);
         return JSONObject.toJSONString(genericService.$invoke(methodName, invokeParamTypes, params));
-    }
-
-    @Override
-    public String invoke(String interfaceClass, String methodName, String params) throws TException {
-        return invoke(interfaceClass,methodName,params);
     }
 }
