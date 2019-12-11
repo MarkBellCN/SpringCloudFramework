@@ -1,8 +1,12 @@
 package com.hollysys.platform.rpc.proxy.server.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.hollysys.platform.common.core.vo.Result;
 import com.hollysys.platform.rpc.proxy.api.provider.RpcProxyProvider;
 import com.hollysys.platform.rpc.proxy.server.utils.ReflectUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
@@ -10,19 +14,20 @@ import org.apache.dubbo.rpc.service.GenericService;
 import org.apache.thrift.TException;
 
 
+@Slf4j
 @Service(protocol = "dubbo")
 public class RpcProxyService implements RpcProxyProvider.Iface {
     @Override
     public String invoke(String interfaceClass, String methodName, String params) throws TException {
         try {
-            return exec(interfaceClass,methodName,params);
+            return invokeDubbo(interfaceClass,methodName,params);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error("RpcProxyService invoke ClassNotFoundException",e);
         }
-        return null;
+        return JSON.toJSONString(Result.fail());
     }
 
-    private String exec(String interfaceClass, String methodName, Object... params) throws ClassNotFoundException {
+    private String invokeDubbo(String interfaceClass, String methodName, Object... params) throws ClassNotFoundException {
         ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
         reference.setInterface(interfaceClass); // 接口名
         reference.setGeneric(true); // 声明为泛化接口

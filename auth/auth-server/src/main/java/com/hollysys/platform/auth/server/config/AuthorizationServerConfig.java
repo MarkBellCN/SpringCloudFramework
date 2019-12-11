@@ -1,6 +1,7 @@
 package com.hollysys.platform.auth.server.config;
 
 
+import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
 import com.hollysys.platform.auth.server.exception.CustomWebResponseExceptionTranslator;
 import com.hollysys.platform.auth.server.oauth2.CustomTokenEnhancer;
 import com.hollysys.platform.auth.server.service.UsernameUserDetailService;
@@ -54,6 +55,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private UsernameUserDetailService userDetailsService;
 
     @Autowired
+    private AuthenticationEntryPointHandler unauthorizedHandler;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -75,6 +79,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
+                .authenticationEntryPoint(unauthorizedHandler)
                 .allowFormAuthenticationForClients()
                 // 开启/oauth/token_key验证端口无权限访问
                 .tokenKeyAccess("permitAll()")
@@ -111,10 +116,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenStore tokenStore() {
         //数据库存储 需要 oauth_refresh_token oauth_access_token表
-        //TokenStore tokenStore = new JdbcTokenStore(dataSource);
+        TokenStore tokenStore = new JdbcTokenStore(dataSource);
 
         //不使用数据库存储信息
-        TokenStore tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
+        //TokenStore tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
         return tokenStore;
     }
 

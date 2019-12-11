@@ -2,9 +2,7 @@ package com.hollysys.platform.auth.server.config;
 
 
 import com.hollysys.platform.auth.server.config.filter.PhoneLoginAuthenticationFilter;
-import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
-import com.hollysys.platform.auth.server.config.handler.LoginAuthFailureHandler;
-import com.hollysys.platform.auth.server.config.handler.LoginAuthSuccessHandler;
+import com.hollysys.platform.auth.server.config.handler.*;
 import com.hollysys.platform.auth.server.config.provider.PhoneAuthenticationProvider;
 import com.hollysys.platform.auth.server.service.PhoneUserDetailService;
 import com.hollysys.platform.auth.server.service.UsernameUserDetailService;
@@ -36,6 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationEntryPointHandler unauthorizedHandler;
 
     @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
     private LoginAuthFailureHandler loginAuthFailureHandler;
 
     @Autowired
@@ -53,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .addFilterBefore(getPhoneLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .accessDeniedHandler(customAccessDeniedHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

@@ -1,5 +1,7 @@
 package com.hollysys.platform.rpc.proxy.server.utils;
 
+import com.hollysys.platform.rpc.proxy.server.cache.ParamTypeCache;
+
 import java.lang.reflect.Method;
 
 public class ReflectUtils {
@@ -12,7 +14,7 @@ public class ReflectUtils {
             if (methodName.equals(method.getName()) && params.length == method.getParameterCount()) {
                 Class<?>[] types = method.getParameterTypes();
                 for (int i = 0; i < params.length; i++) {
-                    paramTypes[i] = types[i].getName();
+                    paramTypes[i] = ParamTypeCache.getParamType(types[i].getName());
                 }
             }
         }
