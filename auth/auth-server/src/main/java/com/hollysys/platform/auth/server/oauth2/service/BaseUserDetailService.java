@@ -47,13 +47,9 @@ public abstract class BaseUserDetailService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> convertToAuthorities(SysUser sysUser) {
-        Set<SysRole> roles = sysRoleProvider.getRoleByUserId(sysUser.getUserId());
         List<GrantedAuthority> authorities = new ArrayList();
-        roles.forEach(e -> {
-            // 存储用户、角色信息到GrantedAuthority，并放到GrantedAuthority列表
-            GrantedAuthority authority = new SimpleGrantedAuthority(String.valueOf(e.getId()));
-            authorities.add(authority);
-        });
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        authorities.add(authority);
         return authorities;
     }
 }

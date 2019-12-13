@@ -21,7 +21,8 @@ public enum AuthErrorType implements ErrorType {
     UNAUTHORIZED("00020012","unauthorized"),
     UNSUPPORTED_RESPONSE_TYPE("00020013","unsupported.response.type"),
     UNSUPPORTED_GRANT_TYPE("00020014","unsupported.grant.type"),
-    USERNAME_NOT_FOUND("00020015","username.not.found");
+    USERNAME_NOT_FOUND("00020015","username.not.found"),
+    ;
 
     /**
      * 错误类型码

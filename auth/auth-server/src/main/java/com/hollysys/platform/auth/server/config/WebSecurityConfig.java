@@ -2,26 +2,29 @@ package com.hollysys.platform.auth.server.config;
 
 
 import com.hollysys.platform.auth.server.config.filter.PhoneLoginAuthenticationFilter;
-import com.hollysys.platform.auth.server.config.handler.*;
+import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
+import com.hollysys.platform.auth.server.config.handler.CustomAccessDeniedHandler;
+import com.hollysys.platform.auth.server.config.handler.LoginAuthFailureHandler;
+import com.hollysys.platform.auth.server.config.handler.LoginAuthSuccessHandler;
 import com.hollysys.platform.auth.server.config.provider.PhoneAuthenticationProvider;
 import com.hollysys.platform.auth.server.oauth2.service.PhoneUserDetailService;
 import com.hollysys.platform.auth.server.oauth2.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-@Order(2)
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 自动注入UserDetailsService
     @Autowired
@@ -59,12 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/actuator/**").permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/oauth/**").authenticated()
-                .and()
-                .authorizeRequests().anyRequest().authenticated();
+                .antMatchers("/actuator/**").permitAll();
     }
 
     @Override
