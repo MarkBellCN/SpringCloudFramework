@@ -1,6 +1,8 @@
 package com.hollysys.iods.web.api.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hollysys.iods.data.api.provider.SysUserProvider;
 import com.hollysys.iods.web.api.dto.SysUserQueryDTO;
 import com.hollysys.iods.web.api.exception.SmServerErrorType;
@@ -23,6 +25,9 @@ import org.apache.thrift.transport.TTransport;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Api(value = "用户信息 API", tags = {"用户信息 API"})
 @Slf4j
@@ -35,7 +40,21 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "分页查询用户信息")
     @PostMapping("/pageQuery")
     public Result pageQuery(@RequestBody @Validated PageQueryParams<SysUserQueryDTO> params){
-        IPage pageResult = sysUserProvider.page(params.getPage());
+        IPage pageResult = null;
+        List param = new ArrayList();
+        param.add(JSON.toJSONString(params.getPage()));
+        try (TTransport transport = new TSocket("localhost", 25908, 30000)) {
+            TProtocol protocol = new TBinaryProtocol(transport);
+            RpcProxyProvider.Client client = new RpcProxyProvider.Client(protocol);
+            transport.open();
+            String s =client.invoke("auth-data-server","SysUserProvider","page",param);
+            log.info("远程调用服务...{}", s);
+            pageResult = JSON.parseObject(s, Page.class);
+        } catch (TException e) {
+            log.error("远程调用异常.", e);
+            return Result.fail();
+        }
+        //IPage pageResult = sysUserProvider.page(params.getPage());
         return Result.success(getResultByPage(pageResult));
     }
 
@@ -45,11 +64,13 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "根据用户ID查询用户信息")
     @GetMapping("/{userId}")
     public Result getSysUserByUserId(@PathVariable("userId") String userId){
+        List params = new ArrayList();
+        params.add(userId);
         try (TTransport transport = new TSocket("localhost", 25908, 30000)) {
             TProtocol protocol = new TBinaryProtocol(transport);
             RpcProxyProvider.Client client = new RpcProxyProvider.Client(protocol);
             transport.open();
-            String s =client.invoke("com.hollysys.iods.data.api.provider.SysUserProvider","getSysUserByUserId",userId);
+            String s =client.invoke("auth-data-server","SysUserProvider","getSysUserByUserId",params);
             log.info("远程调用服务...{}", s);
             return Result.success(s);
         } catch (TException e) {
