@@ -2,7 +2,7 @@ package com.hollysys.platform.auth.server.config;
 
 
 import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
-import com.hollysys.platform.auth.server.exception.CustomWebResponseExceptionTranslator;
+import com.hollysys.platform.auth.server.exception.BootWebResponseExceptionTranslator;
 import com.hollysys.platform.auth.server.oauth2.CustomTokenEnhancer;
 import com.hollysys.platform.auth.server.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,7 +141,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public WebResponseExceptionTranslator customExceptionTranslator() {
-        return new CustomWebResponseExceptionTranslator();
+        return new BootWebResponseExceptionTranslator();
     }
 
     @Bean

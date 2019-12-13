@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class AuthenticationController {
     @Autowired
-    AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
 
     @PostMapping(value = "/permission")
     public Result decide(@RequestParam String url, @RequestParam String method, HttpServletRequest request) {

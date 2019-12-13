@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
 
-public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthException> {
-    public CustomOauthExceptionSerializer() {
-        super(CustomOauthException.class);
+public class BootOauthExceptionSerializer extends StdSerializer<BootOauthException> {
+    public BootOauthExceptionSerializer() {
+        super(BootOauthException.class);
     }
 
     @Override
-    public void serialize(CustomOauthException value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(BootOauthException value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getResult());
     }
 }
