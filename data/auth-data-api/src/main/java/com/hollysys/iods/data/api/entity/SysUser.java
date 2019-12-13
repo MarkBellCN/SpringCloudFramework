@@ -1,11 +1,10 @@
 package com.hollysys.iods.data.api.entity;
 
-import com.hollysys.iods.data.api.base.BaseEntity;
+import com.hollysys.platform.common.core.entity.BaseEntity;
 import lombok.Data;
 
 @Data
 public class SysUser extends BaseEntity {
-
     private String userId;
 
     private String userName;

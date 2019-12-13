@@ -1,8 +1,6 @@
-package com.hollysys.iods.data.api.base;
+package com.hollysys.platform.common.core.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
