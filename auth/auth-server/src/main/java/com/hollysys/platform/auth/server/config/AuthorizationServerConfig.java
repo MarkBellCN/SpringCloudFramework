@@ -3,8 +3,8 @@ package com.hollysys.platform.auth.server.config;
 
 import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
 import com.hollysys.platform.auth.server.exception.BootWebResponseExceptionTranslator;
-import com.hollysys.platform.auth.server.oauth2.CustomTokenEnhancer;
-import com.hollysys.platform.auth.server.service.UsernameUserDetailService;
+import com.hollysys.platform.auth.server.config.token.CustomTokenEnhancer;
+import com.hollysys.platform.auth.server.oauth2.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

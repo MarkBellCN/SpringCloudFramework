@@ -1,4 +1,4 @@
-package com.hollysys.platform.auth.server.oauth2;
+package com.hollysys.platform.auth.server.config.token;
 
 import com.google.common.collect.Maps;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

@@ -1,4 +1,4 @@
-package com.hollysys.platform.auth.server.service;
+package com.hollysys.platform.auth.server.oauth2.service;
 
 import com.hollysys.iods.data.api.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;

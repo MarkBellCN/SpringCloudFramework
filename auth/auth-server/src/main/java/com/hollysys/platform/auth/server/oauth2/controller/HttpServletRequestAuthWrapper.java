@@ -1,4 +1,4 @@
-package com.hollysys.platform.auth.server.controller;
+package com.hollysys.platform.auth.server.oauth2.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
