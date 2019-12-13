@@ -12,7 +12,7 @@ public class UsernameUserDetailService extends BaseUserDetailService {
     protected SysUser getUser(String userId) {
         SysUser sysUser = sysUserProvider.getSysUserByUserId(userId);
         if(sysUser == null){
-            throw new UsernameNotFoundException("找不到该用户，用户名：" + userId);
+            throw new UsernameNotFoundException("username not found exception"+userId);
         }
         return sysUser;
     }

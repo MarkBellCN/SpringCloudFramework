@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hollysys.platform</groupId>
-            <artifactId>rdb-api</artifactId>
+            <artifactId>auth-data-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

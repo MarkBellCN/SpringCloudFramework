@@ -11,8 +11,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>rdb-server</module>
-        <module>rdb-api</module>
+        <module>auth-data-server</module>
+        <module>auth-data-api</module>
     </modules>
 
     <dependencies>

@@ -8,7 +8,7 @@
         <groupId>com.hollysys.platform</groupId>
         <version>3.1.0</version>
     </parent>
-    <artifactId>rdb-server</artifactId>
+    <artifactId>auth-data-server</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.hollysys.platform</groupId>
-            <artifactId>rdb-api</artifactId>
+            <artifactId>auth-data-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Dubbo Spring Cloud Starter -->
