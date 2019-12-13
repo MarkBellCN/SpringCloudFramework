@@ -4,6 +4,7 @@ import com.hollysys.platform.auth.server.oauth2.service.AuthenticationService;
 import com.hollysys.platform.common.core.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping(value = "/permission")
+    @PostMapping(value = "/oauth/permission")
     public Result decide(@RequestParam String url, @RequestParam String method, HttpServletRequest request) {
         boolean decide = authenticationService.decide(new HttpServletRequestAuthWrapper(request, url, method));
         return Result.success(decide);
