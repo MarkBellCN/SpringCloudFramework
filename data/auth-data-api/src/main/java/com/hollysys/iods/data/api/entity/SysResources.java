@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 public class SysResources extends BaseEntity {
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private Integer id;
 
     private String name;

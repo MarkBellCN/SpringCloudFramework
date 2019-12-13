@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 public class SysRoleResources implements Serializable {
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private Integer id;
 
     private Integer resourceId;

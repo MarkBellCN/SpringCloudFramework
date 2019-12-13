@@ -9,9 +9,14 @@ import java.util.Map;
 
 public class ParamTypeCache {
     private static Map<String,String> PARAM_TYPE = new HashMap<>();
+    private static Map<String,String> SERVER_TYPE = new HashMap<>();
 
     static {
         PARAM_TYPE.put(IPage.class.getName(), Page.class.getName());
+    }
+
+    static {
+        SERVER_TYPE.put("auth-data-server", "com.hollysys.iods.data.api.provider");
     }
 
     public static String getParamType(String sourceType){

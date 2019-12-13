@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class SysRole extends BaseEntity {
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private Integer id;
 
     private String remark;

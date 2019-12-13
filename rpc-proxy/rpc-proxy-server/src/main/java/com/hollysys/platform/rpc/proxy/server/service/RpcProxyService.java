@@ -7,6 +7,7 @@ import com.hollysys.platform.common.core.vo.Result;
 import com.hollysys.platform.rpc.proxy.api.provider.RpcProxyProvider;
 import com.hollysys.platform.rpc.proxy.server.utils.ReflectUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
