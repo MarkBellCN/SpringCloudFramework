@@ -40,9 +40,9 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "分页查询用户信息")
     @PostMapping("/pageQuery")
     public Result pageQuery(@RequestBody @Validated PageQueryParams<SysUserQueryDTO> params){
-        IPage pageResult = null;
-        List param = new ArrayList();
-        param.add(JSON.toJSONString(params.getPage()));
+        //IPage pageResult = null;
+        //List param = new ArrayList();
+        /*param.add(JSON.toJSONString(params.getPage()));
         try (TTransport transport = new TSocket("localhost", 25908, 30000)) {
             TProtocol protocol = new TBinaryProtocol(transport);
             RpcProxyProvider.Client client = new RpcProxyProvider.Client(protocol);
@@ -53,8 +53,8 @@ public class SysUserController extends BaseController {
         } catch (TException e) {
             log.error("远程调用异常.", e);
             return Result.fail();
-        }
-        //IPage pageResult = sysUserProvider.page(params.getPage());
+        }*/
+        IPage pageResult = sysUserProvider.page(params.getPage());
         return Result.success(getResultByPage(pageResult));
     }
 
