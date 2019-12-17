@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>sm-server</module>
     </modules>
 
     <dependencies>

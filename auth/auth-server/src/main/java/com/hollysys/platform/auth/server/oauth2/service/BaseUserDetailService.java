@@ -1,10 +1,9 @@
 package com.hollysys.platform.auth.server.oauth2.service;
 
-import com.hollysys.iods.data.api.entity.SysRole;
-import com.hollysys.iods.data.api.entity.SysUser;
-import com.hollysys.iods.data.api.provider.SysResourcesProvider;
-import com.hollysys.iods.data.api.provider.SysRoleProvider;
-import com.hollysys.iods.data.api.provider.SysUserProvider;
+import com.hollysys.platform.auth.data.api.entity.SysUser;
+import com.hollysys.platform.auth.data.api.provider.SysResourcesProvider;
+import com.hollysys.platform.auth.data.api.provider.SysRoleProvider;
+import com.hollysys.platform.auth.data.api.provider.SysUserProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 public abstract class BaseUserDetailService implements UserDetailsService {

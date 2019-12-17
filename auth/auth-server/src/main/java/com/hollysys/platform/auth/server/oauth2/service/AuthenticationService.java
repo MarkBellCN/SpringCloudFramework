@@ -1,6 +1,6 @@
 package com.hollysys.platform.auth.server.oauth2.service;
 
-import com.hollysys.iods.data.api.entity.SysResources;
+import com.hollysys.platform.auth.data.api.entity.SysResources;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
