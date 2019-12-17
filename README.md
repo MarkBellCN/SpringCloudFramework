@@ -6,7 +6,7 @@ HOLLiAS iODS智能生产远程监控系统
 新的智能工厂软件一体化平台，系统满足一体化认证、一体化操作、一体化运维的要求。
 
 # 系统架构
-![avatar](./doc/技术架构.png)
+![avatar](./doc/02_技术架构设计/技术架构.png)
 
 # 技术选型
  * Springboot 2.1.9.RELEASE
