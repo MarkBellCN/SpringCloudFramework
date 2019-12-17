@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.hollysys.iods.data.rdb.*.mapper")
-public class RdbServerApplication {
+@MapperScan("com.hollysys.platform.auth.data.*.mapper")
+public class AuthDataServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RdbServerApplication.class, args);
+        SpringApplication.run(AuthDataServerApplication.class, args);
     }
 }
