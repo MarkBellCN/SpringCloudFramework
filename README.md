@@ -42,7 +42,7 @@ HOLLiAS iODS智能生产远程监控系统
  |   权限管理服务   |  http://{ip}[:port]/auth/{xxx}   |
 
 # 其他说明
-
+ * 首次请将根pom中的modules中模块注释然后 mvn install到本地仓库。
  * Linux如果项目遇到无法启动的情况，需要添加参数 ： -Djava.security.egd=file:/dev/urandom
  
 # 项目结构

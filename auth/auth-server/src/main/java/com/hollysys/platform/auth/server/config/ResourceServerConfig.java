@@ -39,6 +39,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
+                .antMatchers(
+                        "/actuator/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/v2/api-docs",
+                        "/webjars/**"
+                ).permitAll()
+                .and()
+                .authorizeRequests()
                 .anyRequest()
                 .authenticated();
     }

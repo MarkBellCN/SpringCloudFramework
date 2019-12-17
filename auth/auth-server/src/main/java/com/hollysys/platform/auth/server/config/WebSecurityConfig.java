@@ -7,8 +7,8 @@ import com.hollysys.platform.auth.server.config.handler.CustomAccessDeniedHandle
 import com.hollysys.platform.auth.server.config.handler.LoginAuthFailureHandler;
 import com.hollysys.platform.auth.server.config.handler.LoginAuthSuccessHandler;
 import com.hollysys.platform.auth.server.config.provider.PhoneAuthenticationProvider;
-import com.hollysys.platform.auth.server.oauth2.service.PhoneUserDetailService;
-import com.hollysys.platform.auth.server.oauth2.service.UsernameUserDetailService;
+import com.hollysys.platform.auth.server.oauth.service.PhoneUserDetailService;
+import com.hollysys.platform.auth.server.oauth.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,12 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .addFilterBefore(getPhoneLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .accessDeniedHandler(customAccessDeniedHandler)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/actuator/**").permitAll();
+                .accessDeniedHandler(customAccessDeniedHandler);
+
     }
 
     @Override

@@ -4,7 +4,7 @@ package com.hollysys.platform.auth.server.config;
 import com.hollysys.platform.auth.server.config.handler.AuthenticationEntryPointHandler;
 import com.hollysys.platform.auth.server.exception.BootWebResponseExceptionTranslator;
 import com.hollysys.platform.auth.server.config.token.CustomTokenEnhancer;
-import com.hollysys.platform.auth.server.oauth2.service.UsernameUserDetailService;
+import com.hollysys.platform.auth.server.oauth.service.UsernameUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -135,7 +135,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(signingKey);
+        converter.setSigningKey("signingKey");
         return converter;
     }
 
